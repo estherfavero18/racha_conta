@@ -130,7 +130,7 @@ class _HomePageState extends State<HomePage> {
       double qt = double.parse(_qtde.text);
       double percent = double.parse(_perGarcom.text) / 100;
       double vrParPessoa = (total * percent + total) / qt;
-      String vrStr = vrParPessoa.toStringAsPrecision(2);
+      String vrStr = vrParPessoa.toStringAsPrecision(4);
       _infoText = "Valor por pessoa: $vrStr";
     });
   }
