@@ -9,8 +9,10 @@ class MyApp extends StatelessWidget {
       title: 'Racha Conta',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+          // primarySwatch: Colors.red,
+          primaryColor: Colors.brown[800],
+          primaryColorDark: Colors.brown[900],
+          cursorColor: Colors.deepOrangeAccent),
       home: HomePage(),
     );
   }
@@ -40,6 +42,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: _body(),
+      backgroundColor: Theme.of(context).primaryColorDark,
     );
   }
 
@@ -62,9 +65,9 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              _editText("Total", _vrTotal),
-              _editText("Quantidade de pessoas", _qtde),
-              _editText("Porcentagem do garçom", _perGarcom),
+              _editText("Valor da Conta", _vrTotal),
+              _editText("Qtde de pessoas", _qtde),
+              _editText("% garçom", _perGarcom),
               _buttonCalcular(),
               _textInfo(),
             ],
@@ -80,13 +83,13 @@ class _HomePageState extends State<HomePage> {
       keyboardType: TextInputType.number,
       style: TextStyle(
         fontSize: 22,
-        color: Colors.blue,
+        color: Colors.deepOrangeAccent,
       ),
       decoration: InputDecoration(
         labelText: field,
         labelStyle: TextStyle(
           fontSize: 22,
-          color: Colors.grey,
+          color: Colors.deepOrangeAccent,
         ),
       ),
     );
@@ -106,11 +109,11 @@ class _HomePageState extends State<HomePage> {
       margin: EdgeInsets.only(top: 10.0, bottom: 20),
       height: 45,
       child: RaisedButton(
-        color: Colors.blue,
+        color: Colors.deepOrangeAccent,
         child: Text(
           "Calcular",
           style: TextStyle(
-            color: Colors.white,
+            color: Theme.of(context).primaryColor,
             fontSize: 22,
           ),
         ),
@@ -129,9 +132,12 @@ class _HomePageState extends State<HomePage> {
       double total = double.parse(_vrTotal.text);
       double qt = double.parse(_qtde.text);
       double percent = double.parse(_perGarcom.text) / 100;
-      double vrParPessoa = (total * percent + total) / qt;
-      String vrStr = vrParPessoa.toStringAsPrecision(4);
-      _infoText = "Valor por pessoa: $vrStr";
+      double vrParGarcom = total * percent;
+      double vrParPessoa = (vrParGarcom + total) / qt;
+      String strParPessoa = vrParPessoa.toStringAsPrecision(4);
+      String strParGarcom = vrParGarcom.toStringAsPrecision(4);
+      _infoText =
+          "Valor para garçom: $strParGarcom \n Valor por pessoa: $strParPessoa";
     });
   }
 
@@ -140,7 +146,7 @@ class _HomePageState extends State<HomePage> {
     return Text(
       _infoText,
       textAlign: TextAlign.center,
-      style: TextStyle(color: Colors.blue, fontSize: 25.0),
+      style: TextStyle(color: Colors.deepOrangeAccent, fontSize: 25.0),
     );
   }
 }
